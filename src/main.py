@@ -14,7 +14,10 @@ def generate_password(length: int) -> str:
 
 
 def main():
-    password = generate_password(12)
+    length_text = input("Length? (e.g. 12): ")
+    length = int(length_text)
+
+    password = generate_password(length)
     print(password)
 
 
