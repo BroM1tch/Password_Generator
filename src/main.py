@@ -34,15 +34,21 @@ def parse_args():
     parser.add_argument("--no-digits", action="store_true", help="Disable digits")
     parser.add_argument("--no-symbols", action="store_true", help="Disable symbols")
     parser.add_argument("--no-upper", action="store_true", help="Disable uppercase letters")
+    parser.add_argument("-c", "--count", type=int, default=1, help="Number of passwords to generate (default: 1)")
     return parser.parse_args()
 
 def main():
     args = parse_args()
-    try:
-        password = generate_password(args.length, use_digits=not args.no_digits, use_symbols=not args.no_symbols, use_upper=not args.no_upper)
-    except ValueError as e:
-        raise SystemExit(f"Error: {e}")
-    print(password)
+
+    if args.count < 1:
+        raise SystemExit("Error: count must be >= 1")
+
+    for _ in range(args.count):
+        try:
+            password = generate_password(args.length, use_digits=not args.no_digits, use_symbols=not args.no_symbols, use_upper=not args.no_upper)
+        except ValueError as e:
+            raise SystemExit(f"Error: {e}")
+        print(password)
 
 if __name__ == "__main__":
     main()
