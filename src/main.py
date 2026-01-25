@@ -6,20 +6,21 @@ Author: Michel Brochu
 Version: 1.0 (2026)
 """
 
-import secrets, string
+import secrets, string, argparse
 
 def generate_password(length: int) -> str:
     alphabet = string.ascii_letters + string.digits
     return "".join(secrets.choice(alphabet) for _ in range(length))
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Secure password generator")
+    parser.add_argument("--length", type=int, default=8)
+    return parser.parse_args()
 
 def main():
-    length_text = input("Length? (e.g. 12): ")
-    length = int(length_text)
-
-    password = generate_password(length)
+    args = parse_args()
+    password = generate_password(args.length)
     print(password)
-
 
 if __name__ == "__main__":
     main()
