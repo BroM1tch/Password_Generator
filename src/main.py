@@ -8,21 +8,25 @@ Version: 1.0 (2026)
 
 import secrets, string, argparse
 
-def generate_password(length: int, use_digits: bool) -> str:
+def generate_password(length: int, use_digits: bool, use_symbols: bool) -> str:
     alphabet = string.ascii_letters
     if use_digits:
         alphabet += string.digits
+
+    if use_symbols:
+        alphabet += "!@#$%^&*()-_=+[]{};:,.?/"
     return "".join(secrets.choice(alphabet) for _ in range(length))
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Secure password generator")
     parser.add_argument("--length", type=int, default=8)
     parser.add_argument("--no-digits", action="store_true", help="Disable digits")
+    parser.add_argument("--no-symbols", action="store_true", help="Disable symbols")
     return parser.parse_args()
 
 def main():
     args = parse_args()
-    password = generate_password(args.length, use_digits=not args.no_digits)
+    password = generate_password(args.length, use_digits=not args.no_digits, use_symbols=not args.no_symbols)
     print(password)
 
 if __name__ == "__main__":
