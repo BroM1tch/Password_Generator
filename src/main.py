@@ -10,6 +10,7 @@ import secrets, string, argparse
 
 def generate_password(length: int, use_digits: bool, use_symbols: bool, use_upper: bool) -> str:
     alphabet = string.ascii_lowercase
+
     if use_digits:
         alphabet += string.digits
 
@@ -18,6 +19,13 @@ def generate_password(length: int, use_digits: bool, use_symbols: bool, use_uppe
 
     if use_upper:
         alphabet += string.ascii_uppercase
+
+    if length < 4:
+        raise ValueError("length must be >= 4")
+
+    if not alphabet:
+        raise ValueError("alphabet is empty (no character sets selected)")
+
     return "".join(secrets.choice(alphabet) for _ in range(length))
 
 def parse_args():
@@ -30,7 +38,10 @@ def parse_args():
 
 def main():
     args = parse_args()
-    password = generate_password(args.length, use_digits=not args.no_digits, use_symbols=not args.no_symbols, use_upper=not args.no_upper)
+    try:
+        password = generate_password(args.length, use_digits=not args.no_digits, use_symbols=not args.no_symbols, use_upper=not args.no_upper)
+    except ValueError as e:
+        raise SystemExit(f"Error: {e}")
     print(password)
 
 if __name__ == "__main__":
