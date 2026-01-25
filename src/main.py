@@ -3,7 +3,7 @@ Password Generator (CLI)
 Generates secure random passwords using Python secrets module.
 
 Author: Michel Brochu
-Version: 1.0 (2026)
+Version: 1.0.0 (2026)
 """
 
 import secrets, string, argparse
