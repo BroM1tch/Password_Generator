@@ -1,6 +1,13 @@
 """
 Password Generator (CLI)
-Generates secure random passwords using Python secrets module.
+------------------------
+Generates secure random passwords using Python's secrets module.
+
+This script is designed as a small CLI tool showcasing:
+- secure randomness
+- clean argument parsing
+- input validation
+- readable and maintainable structure
 
 Author: Michel Brochu
 Version: 1.0.0 (2026)
@@ -11,6 +18,7 @@ import secrets, string, argparse
 def generate_password(length: int, use_digits: bool, use_symbols: bool, use_upper: bool) -> str:
     alphabet = string.ascii_lowercase
 
+    #Generate a secure random password based on selected character sets.
     if use_digits:
         alphabet += string.digits
 
@@ -29,6 +37,8 @@ def generate_password(length: int, use_digits: bool, use_symbols: bool, use_uppe
     return "".join(secrets.choice(alphabet) for _ in range(length))
 
 def parse_args():
+
+    #Parse command-line arguments for the CLI.
     parser = argparse.ArgumentParser(description="Secure password generator")
     parser.add_argument("--length", type=int, default=8)
     parser.add_argument("--no-digits", action="store_true", help="Disable digits")
@@ -38,6 +48,10 @@ def parse_args():
     return parser.parse_args()
 
 def main():
+    """
+    Program entry point.
+    Handles validation and password generation loop.
+    """
     args = parse_args()
 
     if args.count < 1:
